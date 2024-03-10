@@ -29,6 +29,9 @@ app.get('/addproduct', (req, res)=>{
 app.get('/adminproducts', (req, res)=>{
     res.sendFile('adminproducts.html', {root: "views"})
 })
+app.get('/editProduct/:productId', (req, res)=>{
+    res.sendFile('editproduct.html', {root: "views"})
+})
 app.use(adminRoutes)
 // require('dotenv').config();
 // app.use(cors());

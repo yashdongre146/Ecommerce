@@ -6,7 +6,7 @@ let _db;
 
 const mongodbConnect = async (callback) => {
     try {
-        const client = await MongoClient.connect('mongodb+srv://yashdongre146:clashofclans02@cluster0.0r09782.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+        const client = await MongoClient.connect(process.env.DATABASE_URL)
         _db = client.db();
         callback();
         console.log("Connected!");
