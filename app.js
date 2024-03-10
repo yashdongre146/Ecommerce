@@ -1,6 +1,7 @@
 const express = require('express')
 const adminRoutes = require('./routes/admin')
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const User = require('./models/user');
 // const cors = require('cors')
 // const helmet = require('helmet')
 const mongodbConnect = require('./utils/database').mongodbConnect
@@ -33,12 +34,14 @@ app.get('/editProduct/:productId', (req, res)=>{
     res.sendFile('editproduct.html', {root: "views"})
 })
 app.use(adminRoutes)
-// require('dotenv').config();
 // app.use(cors());
 app.use(express.static('public'));
 
 // app.use(helmet());
-app.use((req, res, next)=>{
+app.use(async (req, res, next)=>{
+    const user = await User.findUserById("65eda7998e72d72df8467705")
+    req.user = user;
+    console.log(user);
     next();
 });
 
