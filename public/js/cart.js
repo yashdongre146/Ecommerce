@@ -15,14 +15,16 @@ function showCartOnScreen(product) {
       <tr>
         <td>${product.productTitle}</td>
         <td>${product.quantity}</td>
-        <td><button onclick="removeItem()">Delete</button></td>
+        <td><button onclick="removeItem('${product.productId}')">Delete</button></td>
       </tr>`;
 
       cartData.insertAdjacentHTML("beforeend", cartDataInnerHTML);
 }
-function removeItem() {
+async function removeItem(productId) {
   // Implement logic to remove item from the cart
-  
+  const response = await axios.delete(`/removeItemFromCart/${productId}`);
+  alert(response.data.message)
+  window.location.href = '/cart'
 }
 
 function orderNow() {

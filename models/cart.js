@@ -23,6 +23,10 @@ class Cart{
         const db = getdb();
         db.collection('cart').updateOne({productId: productId},{$set: {quantity: quantity}})
     }
+    static removeItemFromCart(productId){
+        const db = getdb();
+        db.collection('cart').deleteOne({productId: productId})
+    }
 }
 
 module.exports = Cart

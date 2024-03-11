@@ -28,6 +28,15 @@ exports.getCart = async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
+exports.removeItemFromCart = async (req, res) => {
+    try {
+      await Cart.removeItemFromCart(req.params.productId);
+      res.status(200).json({message: "Item successfuly deleted!"});
+    } catch (error) {
+        console.error("Error getting product:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
 exports.addToCart = async (req, res) => {
     try {
       const productInCart = await Cart.findProductInCart(req.params.productId);

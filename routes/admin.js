@@ -10,5 +10,6 @@ router.get("/getCart", adminController.getCart)
 router.get("/addToCart/:productId", adminController.addToCart)
 router.post("/updateProduct/:productId", adminController.updateProduct)
 router.delete("/deleteProduct/:productId", adminController.deleteProduct)
+router.delete("/removeItemFromCart/:productId", adminController.removeItemFromCart)
 
 module.exports = router;
