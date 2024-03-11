@@ -27,6 +27,9 @@ async function removeItem(productId) {
   window.location.href = '/cart'
 }
 
-function orderNow() {
+async function orderNow() {
   // Implement logic to proceed to order checkout
+  const response = await axios.get(`/orderNow`);
+  alert(response.data.message)
+  window.location.href = '/orders'
 }

@@ -1,10 +1,20 @@
 const Cart = require("../models/cart");
+const Order = require("../models/order");
 const Product = require("../models/product");
 
 exports.getProducts = async (req, res) => {
     try {
       const products = await Product.fetchAll()
       res.status(200).json(products);
+    } catch (error) {
+        console.error("Error getting product:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+exports.getOrders = async (req, res) => {
+    try {
+      const orders = await Order.findAll();
+      res.status(200).json(orders);
     } catch (error) {
         console.error("Error getting product:", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -23,6 +33,24 @@ exports.getCart = async (req, res) => {
     try {
       const productsInCart = await Cart.findProductsInCart();
       res.status(200).json(productsInCart);
+    } catch (error) {
+        console.error("Error getting product:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+exports.orderNow = async (req, res) => {
+    try {
+      const productsInCart = await Cart.findProductsInCart();
+      // Extracting productTitle and quantity into a new array
+      const ordersArray = productsInCart.map(item => ({
+        productId: item.productId,
+        productTitle: item.productTitle,
+        quantity: item.quantity
+      }));
+      const order = await new Order(ordersArray);
+      await order.save();
+
+      res.status(200).json({message: "success"});
     } catch (error) {
         console.error("Error getting product:", error);
         res.status(500).json({ error: "Internal Server Error" });
