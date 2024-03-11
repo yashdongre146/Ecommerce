@@ -16,16 +16,17 @@ async function getProducts() {
   }
 
 function showProductOnScreen(product) {
-    const card = document.getElementById("card");
+    const cardContainer = document.getElementById("card-container");
 
-    var cardInnerHTML = `<h2>${product.title}</h2>
-    <img src="${product.imageUrl}" alt="Product Image">
+    var cardInnerHTML = `<div class="card"><h2>${product.title}</h2>
+    <img src="${product.imageUrl}" alt="Product Image" height="200" width="150">
     <p>$${product.price}</p>
     <p>${product.description}</p>
     <a class="btn" href="/editProduct/${product._id}">Edit</a>
-    <button class="btn" onclick="deleteProduct('${product._id}')">Delete</button>`;
+    <button class="btn" onclick="deleteProduct('${product._id}')">Delete</button></div>`;
   
-    card.insertAdjacentHTML("beforeend", cardInnerHTML);
+    cardContainer.insertAdjacentHTML("beforeend", cardInnerHTML);
+
 }
 
 async function deleteProduct(productId) {

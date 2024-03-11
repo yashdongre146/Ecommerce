@@ -30,7 +30,7 @@ class Product{
     }
     static fetchOne(productId){
         const db = getdb();
-        return db.collection('products').find({_id: new mongodb.ObjectId(productId)});
+        return db.collection('products').findOne({_id: new mongodb.ObjectId(productId)});
     }
 }
 

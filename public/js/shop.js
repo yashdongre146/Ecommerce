@@ -16,19 +16,23 @@ async function getProducts() {
   }
 
 function showProductOnScreen(product) {
-    const card = document.getElementById("card");
+    const cardContainer = document.getElementById("card-container");
 
-    var cardInnerHTML = `<h2>${product.title}</h2>
-    <img src="${product.imageUrl}" alt="Product Image">
+    var cardInnerHTML = `<div class="card"><h2>${product.title}</h2>
+    <img src="${product.imageUrl}" alt="Product Image" height="200" width="150">
     <p>$${product.price}</p>
     <p>${product.description}</p>
     <button class="btn" onclick="showDetails('${product._id}')">Details</button>
-    <button class="btn" onclick="addToCart('${product._id}')">Add to Cart</button>`;
+    <button class="btn" onclick="addToCart('${product._id}')">Add to Cart</button></div>`;
   
-    card.insertAdjacentHTML("beforeend", cardInnerHTML);
+    cardContainer.insertAdjacentHTML("beforeend", cardInnerHTML);
 }
 
 async function showDetails(productId) {
     const response = await axios.get(`/showDetails/${productId}`)
     console.log(response);
+}
+async function addToCart(productId) {
+    const response = await axios.get(`/addToCart/${productId}`)
+    alert(response.data.message);
 }
