@@ -1,5 +1,7 @@
+const token = localStorage.getItem('token');
+
 window.addEventListener('DOMContentLoaded', async ()=>{
-  const response = await axios.get('/getCart');
+  const response = await axios.get('/getCart', {headers: {'auth': token}});
   for (const productInCart of response.data) {
       showCartOnScreen(productInCart);
       console.log(productInCart);
@@ -22,14 +24,14 @@ function showCartOnScreen(product) {
 }
 async function removeItem(productId) {
   // Implement logic to remove item from the cart
-  const response = await axios.delete(`/removeItemFromCart/${productId}`);
+  const response = await axios.delete(`/removeItemFromCart/${productId}`, {headers: {'auth': token}});
   alert(response.data.message)
   window.location.href = '/cart'
 }
 
 async function orderNow() {
   // Implement logic to proceed to order checkout
-  const response = await axios.get(`/orderNow`);
+  const response = await axios.get(`/orderNow`, {headers: {'auth': token}});
   alert(response.data.message)
   window.location.href = '/orders'
 }

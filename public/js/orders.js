@@ -1,5 +1,7 @@
+const token = localStorage.getItem('token');
+
 window.addEventListener('DOMContentLoaded', async ()=>{
-    const response = await axios.get('/getOrders');
+    const response = await axios.get('/getOrders', {headers: {'auth': token}});
     for (const order of response.data) {
         showOrderOnScreen(order);
         console.log(order);

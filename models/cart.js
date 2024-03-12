@@ -2,30 +2,31 @@ const getdb = require('../utils/database').getdb;
 const mongodb = require('mongodb');
 
 class Cart{
-    constructor(productId, productTitle, quantity){
+    constructor(productId, productTitle, quantity, userId){
         this.productId = productId,
         this.productTitle = productTitle,
-        this.quantity = quantity
+        this.quantity = quantity,
+        this.userId = userId
     }
     save(){
         const db = getdb();
         db.collection('cart').insertOne(this);
     }
-    static findProductInCart(productId){
+    static findProductInCart(productId, userId){
         const db = getdb();
-        return db.collection('cart').findOne({productId: productId})
+        return db.collection('cart').findOne({productId: productId, userId: new mongodb.ObjectId(userId)})
     }
-    static findProductsInCart(){
+    static findProductsInCart(userId){
         const db = getdb();
-        return db.collection('cart').find().toArray();
+        return db.collection('cart').find({userId: new mongodb.ObjectId(userId)}).toArray();
     }
-    static updateQuantity(productId, quantity){
+    static updateQuantity(productId, quantity, userId){
         const db = getdb();
-        db.collection('cart').updateOne({productId: productId},{$set: {quantity: quantity}})
+        db.collection('cart').updateOne({productId: productId, userId: new mongodb.ObjectId(userId)},{$set: {quantity: quantity}})
     }
-    static removeItemFromCart(productId){
+    static removeItemFromCart(productId, userId){
         const db = getdb();
-        db.collection('cart').deleteOne({productId: productId})
+        db.collection('cart').deleteOne({productId: productId, userId: new mongodb.ObjectId(userId)})
     }
 }
 
