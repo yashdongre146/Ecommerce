@@ -1,3 +1,14 @@
+//Imp Notes
+// Product.find()
+// .select('title price -_id') // to select only necessary fields. id selected by default until excluded.
+// .populate('userId', 'name -email')  // populate is used to get all detail inf abt certain field specially helful (to get whole referenced document)
+// .populate('userId.name')
+
+// note: populate return a query and not promise so then will not work
+//        so use populate().execPopulate() to get a promise in return
+
+
+
 const Cart = require("../models/cart");
 const Order = require("../models/order");
 const Product = require("../models/product");
@@ -99,9 +110,13 @@ exports.orderNow = async (req, res) => {
     // old school
     // const order = await new Order(ordersArray, req.user._id);
     // await order.save();
+
+    //can just pass req.user mongoose will pich _id by itself
     const order = await new Order({products: ordersArray, userId: req.user._id});
     await order.save();
 
+    // clearing the cart
+    await Cart.deleteMany({})
     res.status(200).json({ message: "success" });
   } catch (error) {
     console.error("Error getting product:", error);

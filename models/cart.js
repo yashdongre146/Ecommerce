@@ -21,7 +21,10 @@ const cartSchema = new Schema({
         required: true
     }
 })
-
+// define your methods here but with mongoose syntax so no use
+// cartSchema.methods.myMethod = function(){
+    
+// }
 module.exports = mongoose.model('Cart', cartSchema)
 
 
