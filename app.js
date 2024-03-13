@@ -1,8 +1,11 @@
 const express = require('express')
 const adminRoutes = require('./routes/admin')
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose')
+require('dotenv').config()
 
-const mongodbConnect = require('./utils/database').mongodbConnect
+
+// const mongodbConnect = require('./utils/database').mongodbConnect
 // const cors = require('cors')
 // const helmet = require('helmet')
 
@@ -47,6 +50,7 @@ app.use(express.static('public'));
 //     next();
 // });
 
-mongodbConnect(()=>{
-    app.listen(3000);
-});
+mongoose.connect(process.env.DATABASE_URL).then(()=>{
+    app.listen(3000)
+    console.log('Connected');
+})
